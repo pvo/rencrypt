@@ -1,0 +1,36 @@
+Warranty
+
+This software is provided "as is" and without any express or implied warranties, including, without limitation, the implied warranties of merchantibility and fitness for a particular purpose.
+
+************************
+
+To create a key:
+ % openssl genrsa -des3 -out private.pem 2048
+ Generating RSA private key, 2048 bit long modulus
+ ......+++
+ .+++
+ e is 65537 (0x10001)
+ Enter pass phrase for private.pem:
+ Verifying - Enter pass phrase for private.pem:
+
+Then:
+ % openssl rsa -in private.pem -out public.pem -outform PEM -pubout
+ Enter pass phrase for private.pem:
+ writing RSA key
+
+************************
+
+To Encrypt:
+>> require 'REncrypt'
+=> true
+>> privkey='/path/to/private.pem'
+=> "/path/to/private.pem"
+>> pubkey='/path/to/public.pem'
+=> "/path/to/public.pem"
+>> a= Rencrypt.encrypt_sensitive(pubkey, "some kind of data")
+=> ["\016\331\332\e\363\253\001\363}\203\277\342\325\025m\026$\317\221\200\2237\352>tS\355\340\310k\333&", "}[\322\001\206*\301\314\030\023W\271\025\026\363\355\214+H\360\023\331\2128\302\320\276%\353\016\\\026\315p\222{CQI\"4\"4\377\223(\366${\006\332\n\254p\034vM\b\310\263x\223\364\227\223\242:\376Qfc\306]\374\253X&\343\350[5\243vM\204tQW\264\300[`\341F\361\245\316'\243\371\3620f\212\217\255\321\e\315\264\0247}\311\227\\\220\226'\235\027-\005 e\313H\216:\242(\023\342I\343O\213\0277M\177r\022\303\206\025\315>\353\247v8N*\243S\301\177\342\"\223n#CLv\032\021\246\301\236\367!\003\241\002L\2343\360?\225\361\310\310S\254\263 \037\331\250\347\355]\356\373\276A\330\000\275\360\306\200G\225\252\347\001#\305-\237^\376\363\020\360\254\006\233}\225\262\230\r\250\216T*\032\204\221\004\360z\232\005\003)\312\304\351\031\006\e\032\247$h\025\367\rw\375", "\320\223\343\t\373_\276\220\374\247\360s\030{\354\264:\360\261\\\vf;W\322\344\222\235[\325o\334\e)\326A\233\215DEN\214\337\325\273]\221!\f\313\336\351\213\371\300\343\266_\221\205\265v\017\245\2521X\026\346\210\226\035\r?\255\034<\331M\364\266\232\224\347\247tuX\370\2111\231\350F\341G\b^n\355\202\351\311E\230^\e^\230\205bN#\250<s\263}\271Go0\212\262iq\267\v\205\357M\002\036Q\\\340`\030a\006(1\267\361L\363\024fV\213(\276:F*\310\200@\216\024\241a<\370\032\350I))\224O\372\340\320\272.\234\335D\325!\273O0\2706\375G\rXV\311\325ml!\262N\256\370\216\f\305\364$\350\221\3245$<\217$Z1\222]\tG\234\272\304\342\361&uP\356Z\243\3330\242\225aE\224\367+z\020\311zM\371\325\tA\264\016^\017\376\266\312\005"]
+
+To Decrypt:
+Rencrypt.decrypt_sensitive(privkey, a[0], a[1], a[2], "somepasswordthatissecure")
+=> "some kind of data"
+>> 
